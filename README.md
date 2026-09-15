@@ -43,9 +43,9 @@ Then on Vercel: **Add New → Project → Import** the repo. Vercel auto-detects
 ├── styles.css          # dark-green glassmorphism design system
 ├── app.js              # data + rendering + interactions
 └── assets/
-    ├── fields-map.jpg  # generated aerial field mosaic
-    ├── workers/*.jpg   # generated worker portraits
-    └── equipment/*.jpg # generated equipment photos
+    ├── field-map.svg             # bundled field-map artwork
+    ├── worker-placeholder.svg    # bundled worker/profile artwork
+    └── equipment-placeholder.svg # bundled equipment artwork
 ```
 
 ## Credits

@@ -3,14 +3,14 @@
 
 /* ---------------- data ---------------- */
 const WORKERS = [
-  {id:1,name:"Olena Kovalenko",role:"Field operations coordinator",img:"assets/workers/olena.jpg",on:true, tasks:5, cap:88,skills:["Crop disease ID","Sampling & scouting"]},
-  {id:2,name:"Ethan Parker",role:"Greenhouse harvest manager",img:"assets/workers/ethan.jpg",on:true, tasks:3, cap:70,skills:["Harvest planning","Produce handling"]},
-  {id:3,name:"Lauren Hayes",role:"Harvest crew supervisor",img:"assets/workers/lauren.jpg",on:true, tasks:4, cap:63,skills:["Harvest planning","Team briefing","+2"]},
-  {id:4,name:"Mike Carter",role:"Field equipment operator",img:"assets/workers/mike.jpg",on:false,tasks:4, cap:82,skills:["GPS guidance","Fertilizer spreading"]},
-  {id:5,name:"Ryan Brooks",role:"Field operations coordinator",img:"assets/workers/ryan.jpg",on:true, tasks:2, cap:45,skills:["Irrigation","Soil prep"]},
-  {id:6,name:"Diane Collins",role:"Produce quality inspector",img:"assets/workers/diane.jpg",on:true, tasks:6, cap:91,skills:["Inspection","Admin & reporting"]},
-  {id:7,name:"Frank Bennett",role:"Tractor and implements operator",img:"assets/workers/frank.jpg",on:false,tasks:3, cap:58,skills:["Tractor ops","Plowing"]},
-  {id:8,name:"Tyler Hughes",role:"Livestock care technician",img:"assets/workers/tyler.jpg",on:true, tasks:5, cap:74,skills:["Livestock care","Feed planning"]},
+  {id:1,name:"Olena Kovalenko",role:"Field operations coordinator",img:"assets/worker-placeholder.svg",on:true, tasks:5, cap:88,skills:["Crop disease ID","Sampling & scouting"]},
+  {id:2,name:"Ethan Parker",role:"Greenhouse harvest manager",img:"assets/worker-placeholder.svg",on:true, tasks:3, cap:70,skills:["Harvest planning","Produce handling"]},
+  {id:3,name:"Lauren Hayes",role:"Harvest crew supervisor",img:"assets/worker-placeholder.svg",on:true, tasks:4, cap:63,skills:["Harvest planning","Team briefing","+2"]},
+  {id:4,name:"Mike Carter",role:"Field equipment operator",img:"assets/worker-placeholder.svg",on:false,tasks:4, cap:82,skills:["GPS guidance","Fertilizer spreading"]},
+  {id:5,name:"Ryan Brooks",role:"Field operations coordinator",img:"assets/worker-placeholder.svg",on:true, tasks:2, cap:45,skills:["Irrigation","Soil prep"]},
+  {id:6,name:"Diane Collins",role:"Produce quality inspector",img:"assets/worker-placeholder.svg",on:true, tasks:6, cap:91,skills:["Inspection","Admin & reporting"]},
+  {id:7,name:"Frank Bennett",role:"Tractor and implements operator",img:"assets/worker-placeholder.svg",on:false,tasks:3, cap:58,skills:["Tractor ops","Plowing"]},
+  {id:8,name:"Tyler Hughes",role:"Livestock care technician",img:"assets/worker-placeholder.svg",on:true, tasks:5, cap:74,skills:["Livestock care","Feed planning"]},
 ];
 
 const FIELDS = ["North 40","Apple orchard west field (12 ha)","Tomato greenhouse 2","Pumpkin test north","Corn pivot 1, quadrant NE","Strawberry tunnels (4-6 row)","Service yard, maintenance lane 2","Irrigation control (pivot 1)"];
@@ -302,7 +302,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     e.preventDefault();
     const fd = new FormData(e.target);
     WORKERS.push({ id: Math.max(...WORKERS.map(w=>w.id))+1, name: fd.get("name"), role: fd.get("role"),
-      img:`assets/workers/${["olena","ethan","lauren","mike","ryan","diane","frank","tyler"][Math.floor(Math.random()*8)]}.jpg`,
+      img:"assets/worker-placeholder.svg",
       on:true, tasks:0, cap:10, skills:["New hire"] });
     e.target.reset(); closeModal("#workerFormModal"); renderWorkers(); toast("Worker added");
   });

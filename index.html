@@ -25,7 +25,7 @@
     </nav>
     <div class="top-right">
       <button class="icon-btn" title="Settings" onclick="toast('Settings (demo)')">&#9881;</button>
-      <img class="avatar" src="assets/workers/ethan.jpg" alt="You">
+      <img class="avatar" src="assets/worker-placeholder.svg" alt="You">
     </div>
   </header>
 
@@ -37,7 +37,7 @@
 
         <div class="area-map">
           <div class="map-card">
-            <img class="bg" src="assets/fields-map.jpg" alt="Field map">
+            <img class="bg" src="assets/field-map.svg" alt="Field map">
             <div class="scrim"></div>
             <div class="map-head">
               <span class="chip select" id="fieldSelect">All fields &#9662;</span>
@@ -97,15 +97,15 @@
         <div class="area-equip">
           <div class="equip-row">
             <div class="equip-card" onclick="toast('Tractors: 4 total, 3 in use, 1 down')">
-              <div class="ph"><img src="assets/equipment/tractor-green.jpg" alt="Tractors"><span class="badge">3 in use</span></div>
+              <div class="ph"><img src="assets/equipment-placeholder.svg" alt="Tractors"><span class="badge">3 in use</span></div>
               <div class="equip-info"><h4>Tractors</h4><p>4 total &nbsp;|&nbsp; 3 in use &nbsp;|&nbsp; 1 down</p></div>
             </div>
             <div class="equip-card" onclick="toast('Field tractor RX-7: 6 tasks, 20.7 km this week')">
-              <div class="ph"><img src="assets/equipment/tractor-yellow.jpg" alt="Field tractor RX-7"><span class="badge">Active</span></div>
+              <div class="ph"><img src="assets/equipment-placeholder.svg" alt="Field tractor RX-7"><span class="badge">Active</span></div>
               <div class="equip-info"><h4>Field tractor RX-7</h4><p>6 tasks &nbsp;|&nbsp; 20.7 km this week</p></div>
             </div>
             <div class="equip-card down" onclick="toast('Utility vehicles: 2 in use, 1 down')">
-              <div class="ph"><img src="assets/equipment/utility-truck.jpg" alt="Utility vehicles"><span class="badge">1 down</span></div>
+              <div class="ph"><img src="assets/equipment-placeholder.svg" alt="Utility vehicles"><span class="badge">1 down</span></div>
               <div class="equip-info"><h4>Utility vehicles</h4><p>3 total &nbsp;|&nbsp; 2 in use &nbsp;|&nbsp; 1 down</p></div>
             </div>
           </div>
@@ -146,10 +146,10 @@
       </div>
       <div id="kanban" class="kanban"></div>
       <div id="taskListWrap" style="display:none" class="card">
-        <table class="task-table">
+        <div class="table-scroll"><table class="task-table">
           <thead><tr><th>Task</th><th>Field</th><th>Due</th><th>Priority</th><th>Status</th><th>Assignees</th></tr></thead>
           <tbody id="taskRows"></tbody>
-        </table>
+        </table></div>
       </div>
     </section>
 
