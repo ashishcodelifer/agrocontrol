@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgroControl — Agriculture App Dashboard</title>
+<meta name="description" content="AgroControl: farm operations dashboard prototype — tasks, calendar, workers and field monitoring.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%233d7a34'/><text x='50' y='66' font-size='52' text-anchor='middle'>&#127807;</text></svg>">
+</head>
+<body>
+<div class="shell">
+
+  <!-- top bar -->
+  <header class="topbar">
+    <div class="logo"><span class="leaf">&#127807;</span> AgroControl</div>
+    <nav class="tabs">
+      <button class="active" data-tab="dashboard">Dashboard</button>
+      <button data-tab="tasks">Tasks</button>
+      <button data-tab="calendar">Calendar</button>
+      <button data-tab="workers">Workers</button>
+    </nav>
+    <div class="top-right">
+      <button class="icon-btn" title="Settings" onclick="toast('Settings (demo)')">&#9881;</button>
+      <img class="avatar" src="assets/workers/ethan.jpg" alt="You">
+    </div>
+  </header>
+
+  <main class="app">
+
+    <!-- ============ DASHBOARD ============ -->
+    <section id="view-dashboard" class="view active">
+      <div class="dash-grid">
+
+        <div class="area-map">
+          <div class="map-card">
+            <img class="bg" src="assets/fields-map.jpg" alt="Field map">
+            <div class="scrim"></div>
+            <div class="map-head">
+              <span class="chip select" id="fieldSelect">All fields &#9662;</span>
+            </div>
+            <div class="map-weather">
+              <span class="chip">&#9728; 24&deg;C &middot; Partly cloudy</span>
+              <span class="chip">&#128167; 31% soil moisture</span>
+              <span class="chip">&#127787; 6 m/s wind</span>
+            </div>
+            <div class="map-foot">
+              <div class="foot-card">
+                <div class="foot-label">Crop health <span class="pill">+6% this week</span></div>
+                <div class="foot-value">Good</div>
+                <canvas id="sparkline" style="width:100%;height:32px;margin-top:6px"></canvas>
+              </div>
+              <div class="foot-card">
+                <div class="foot-label">Harvest window</div>
+                <div class="donut-wrap">
+                  <div class="donut">
+                    <svg width="64" height="64" viewBox="0 0 64 64">
+                      <circle cx="32" cy="32" r="26" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="7"/>
+                      <circle cx="32" cy="32" r="26" fill="none" stroke="#ece84b" stroke-width="7"
+                        stroke-linecap="round" stroke-dasharray="163.4" stroke-dashoffset="27.2"/>
+                    </svg>
+                    <span class="donut-txt">5/6</span>
+                  </div>
+                  <div>
+                    <div class="foot-value">5 fields</div>
+                    <div class="foot-sub">in the next 9 days</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="area-stats">
+          <div class="stat-row">
+            <div class="stat-card">
+              <div class="stat-label"><span class="stat-ico">&#128119;</span> Workforce on duty</div>
+              <div class="stat-value">18 workers</div>
+              <button class="mini-arrow" title="Open" onclick="switchTab('workers')">&#8599;</button>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label"><span class="stat-ico">&#128739;</span> Equipment availability</div>
+              <div class="stat-value">12 / 15 units</div>
+              <button class="mini-arrow" title="Open" onclick="toast('Equipment detail (demo)')">&#8599;</button>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label"><span class="stat-ico">&#128176;</span> Spend pace (MTD)</div>
+              <div class="stat-value">$24,380</div>
+              <button class="mini-arrow" title="Open" onclick="toast('Spend report (demo)')">&#8599;</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="area-equip">
+          <div class="equip-row">
+            <div class="equip-card" onclick="toast('Tractors: 4 total, 3 in use, 1 down')">
+              <div class="ph"><img src="assets/equipment/tractor-green.jpg" alt="Tractors"><span class="badge">3 in use</span></div>
+              <div class="equip-info"><h4>Tractors</h4><p>4 total &nbsp;|&nbsp; 3 in use &nbsp;|&nbsp; 1 down</p></div>
+            </div>
+            <div class="equip-card" onclick="toast('Field tractor RX-7: 6 tasks, 20.7 km this week')">
+              <div class="ph"><img src="assets/equipment/tractor-yellow.jpg" alt="Field tractor RX-7"><span class="badge">Active</span></div>
+              <div class="equip-info"><h4>Field tractor RX-7</h4><p>6 tasks &nbsp;|&nbsp; 20.7 km this week</p></div>
+            </div>
+            <div class="equip-card down" onclick="toast('Utility vehicles: 2 in use, 1 down')">
+              <div class="ph"><img src="assets/equipment/utility-truck.jpg" alt="Utility vehicles"><span class="badge">1 down</span></div>
+              <div class="equip-info"><h4>Utility vehicles</h4><p>3 total &nbsp;|&nbsp; 2 in use &nbsp;|&nbsp; 1 down</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="area-chart">
+          <div class="card chart-card">
+            <div class="card-title">Workload tasks vs capacity
+              <span class="spacer"></span>
+              <span class="chip" style="padding:5px 10px;font-size:11px">10 days &#9662;</span>
+              <button class="mini-arrow" onclick="toast('Chart options (demo)')">&#8599;</button>
+            </div>
+            <div class="chart-box"><canvas id="workloadChart"></canvas></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============ TASKS ============ -->
+    <section id="view-tasks" class="view">
+      <div class="page-head">
+        <h2>Tasks</h2>
+        <button class="btn btn-primary" id="newTaskBtn">&#43; New task</button>
+      </div>
+      <div class="toolbar">
+        <div class="search">&#128269;<input id="taskSearch" type="text" placeholder="Search tasks or fields..."></div>
+        <select id="prioFilter" class="btn btn-ghost" style="border-radius:999px">
+          <option value="all">&#128737; All priorities</option>
+          <option value="high">High</option>
+          <option value="medium">Medium</option>
+          <option value="low">Low</option>
+        </select>
+        <div class="view-toggle">
+          <button class="active" data-view="kanban">&#9638; Kanban view</button>
+          <button data-view="list">&#9776; List view</button>
+        </div>
+      </div>
+      <div id="kanban" class="kanban"></div>
+      <div id="taskListWrap" style="display:none" class="card">
+        <table class="task-table">
+          <thead><tr><th>Task</th><th>Field</th><th>Due</th><th>Priority</th><th>Status</th><th>Assignees</th></tr></thead>
+          <tbody id="taskRows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ CALENDAR ============ -->
+    <section id="view-calendar" class="view">
+      <div class="page-head">
+        <h2>Calendar</h2>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-ghost" id="calPrev">&#10094;</button>
+          <button class="btn btn-ghost" id="calNext">&#10095;</button>
+        </div>
+      </div>
+      <div class="cal-grid">
+        <div class="card">
+          <div class="cal-head"><h3 id="calTitle"></h3></div>
+          <div id="calGrid" class="cal-month"></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Upcoming</div>
+          <div id="upcoming" class="upcoming"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ WORKERS ============ -->
+    <section id="view-workers" class="view">
+      <div class="page-head">
+        <h2>Workers</h2>
+        <button class="btn btn-primary" id="addWorkerBtn">&#43; Add worker</button>
+      </div>
+      <div class="toolbar">
+        <div class="search">&#128269;<input id="workerSearch" type="text" placeholder="Search workers..."></div>
+        <button class="btn btn-ghost" onclick="toast('Filter (demo)')">&#128737; Filter</button>
+      </div>
+      <div id="workersGrid" class="workers-grid"></div>
+    </section>
+
+  </main>
+
+  <p class="footer-note">Prototype inspired by <a href="https://dribbble.com/shots/27108598-Agriculture-App-Dashboard-UI-AgroControl" target="_blank" rel="noopener">AgroControl — Phenomenon Studio on Dribbble</a>. Built with vanilla HTML/CSS/JS &amp; Chart.js.</p>
+</div>
+
+<!-- new task modal -->
+<div class="modal-back" id="taskModal">
+  <form class="modal" id="taskForm">
+    <h3>New task <button type="button" class="x-btn" onclick="closeModal('#taskModal')">&#10005;</button></h3>
+    <div class="field"><label>Title</label><input name="title" required placeholder="e.g. Scout north field for pests"></div>
+    <div class="field-row">
+      <div class="field"><label>Due date</label><input name="due" type="date" required></div>
+      <div class="field"><label>Priority</label>
+        <select name="prio"><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option></select>
+      </div>
+    </div>
+    <div class="field"><label>Field</label><input name="field" required placeholder="e.g. Corn pivot 1"></div>
+    <div class="field"><label>Assignee</label>
+      <select name="assignee">
+        <option value="1">Olena Kovalenko</option><option value="2">Ethan Parker</option>
+        <option value="3">Lauren Hayes</option><option value="4">Mike Carter</option>
+        <option value="5">Ryan Brooks</option><option value="6">Diane Collins</option>
+        <option value="7">Frank Bennett</option><option value="8">Tyler Hughes</option>
+      </select>
+    </div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center" type="submit">Create task</button>
+  </form>
+</div>
+
+<!-- worker detail modal -->
+<div class="modal-back" id="workerModal">
+  <div class="modal wide">
+    <h3>Worker profile <button class="x-btn" onclick="closeModal('#workerModal')">&#10005;</button></h3>
+    <div class="wd-head">
+      <img id="wdImg" src="" alt="">
+      <div>
+        <h3 id="wdName" style="margin-bottom:2px"></h3>
+        <div class="role-line" id="wdRole"></div>
+        <div class="loc-line" id="wdLoc"></div>
+      </div>
+      <button class="btn btn-primary" style="margin-left:auto" onclick="toast('Assign task (demo)')">Assign task</button>
+    </div>
+    <div class="wd-grid">
+      <div class="card"><div class="card-title" style="margin-bottom:8px">Productivity report</div><canvas id="scatterChart"></canvas></div>
+      <div class="card"><div class="card-title" style="margin-bottom:8px">Workload &middot; Last 16 days</div><canvas id="workloadChart2"></canvas></div>
+    </div>
+    <div class="wd-grid" style="grid-template-columns:1fr 1fr">
+      <div class="card"><div class="card-title" style="margin-bottom:10px">Tasks assigned</div><div id="wdTasks" class="wd-tasks"></div></div>
+      <div class="card"><div class="card-title" style="margin-bottom:8px">Skills map</div><canvas id="radarChart"></canvas></div>
+    </div>
+  </div>
+</div>
+
+<!-- add worker modal -->
+<div class="modal-back" id="workerFormModal">
+  <form class="modal" id="workerForm">
+    <h3>Add worker <button type="button" class="x-btn" onclick="closeModal('#workerFormModal')">&#10005;</button></h3>
+    <div class="field"><label>Full name</label><input name="name" required placeholder="e.g. Sam Rivera"></div>
+    <div class="field"><label>Role</label><input name="role" required placeholder="e.g. Irrigation specialist"></div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center" type="submit">Add worker</button>
+  </form>
+</div>
+
+<div class="toast" id="toast"><span>&#127807;</span><span id="toast-msg"></span></div>
+
+<script src="app.js"></script>
+</body>
+</html>
